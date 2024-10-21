@@ -1,16 +1,18 @@
-import { getEvents } from '@/data'
+'use client'
 import '@/styles/tailwind.css'
 import type { Metadata } from 'next'
 import type React from 'react'
 import { ApplicationLayout } from './application-layout'
+import { getEvents } from './data'
+import WalletProvider from '@/providers/walletProvider'
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s - Circles',
-    default: 'Circles on base',
-  },
-  description: '',
-}
+// export const metadata: Metadata = {
+//   title: {
+//     template: '%s - Circles',
+//     default: 'Circles on base',
+//   },
+//   description: '',
+// }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   let events = await getEvents()

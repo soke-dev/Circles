@@ -1,9 +1,9 @@
-import { Avatar } from '@/components/avatar'
-import { Button } from '@/components/button'
-import { Heading } from '@/components/heading'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/table'
-import { getOrders } from '@/data'
+import { Avatar } from 'src/components/avatar'
+import { Button } from 'src/components/button'
+import { Heading } from 'src/components/heading'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'src/components/table'
 import type { Metadata } from 'next'
+import { getOrders } from '../data'
 
 export const metadata: Metadata = {
   title: 'Orders',
@@ -21,7 +21,7 @@ export default async function Orders() {
       <Table className="mt-8 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
         <TableHead>
           <TableRow>
-          <TableHeader>Rank</TableHeader>
+            <TableHeader>Rank</TableHeader>
             <TableHeader>Joined Date</TableHeader>
             <TableHeader>Name</TableHeader>
             {/* <TableHeader>Saved</TableHeader> */}

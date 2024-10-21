@@ -1,23 +1,48 @@
-import { Button } from '@/components/button'
-import { Checkbox, CheckboxField } from '@/components/checkbox'
-import { Divider } from '@/components/divider'
-import { Label } from '@/components/fieldset'
-import { Heading, Subheading } from '@/components/heading'
-import { Input } from '@/components/input'
-import { Select } from '@/components/select'
-import { Text } from '@/components/text'
-import { Textarea } from '@/components/textarea'
-import type { Metadata } from 'next'
-import { Address } from './address'
+"use client";
+import { ChangeEvent } from 'react';
+import { Button } from 'src/components/button';
+import { Checkbox, CheckboxField } from 'src/components/checkbox';
+import { Divider } from 'src/components/divider';
+import { Label } from 'src/components/fieldset';
+import { Heading, Subheading } from 'src/components/heading';
+import { Input } from 'src/components/input';
+import { Select } from 'src/components/select';
+import { Text } from 'src/components/text';
+import { Textarea } from 'src/components/textarea';
 
-export const metadata: Metadata = {
-  title: 'Settings',
-}
 
-export default function Settings() {
+
+// const isLoading = new Signal(false);
+
+
+export default function CreateCirclePage() {
+
+  const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const data = new FormData(e.target);
+
+    console.log(data);
+
+    // isLoading.value = true;
+
+    // const circle: Circle = new Circle({
+    //   name: data.get('name') as string,
+    //   description: data.get('bio') as string
+    // })
+
+    try {
+
+    } catch (error) {
+
+    }
+
+    // isLoading.value = false;
+  }
+
   return (
-    <form method="post" className="mx-auto max-w-4xl">
-      <Heading>Create a circle (coming soon) </Heading>
+    <form onSubmit={onSubmit} className="mx-auto max-w-4xl">
+      <Heading>Create a circle </Heading>
       <Divider className="my-10 mt-6" />
 
       <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -60,35 +85,36 @@ export default function Settings() {
 
       <Divider className="my-10" soft />
 
-      {/* <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
+      <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
         <div className="space-y-1">
-          <Subheading>Address</Subheading>
-          <Text>This is where your organization is registered.</Text>
+          <Subheading>Duration</Subheading>
+          <Text>duration of the circle</Text>
         </div>
-        <Address />
+        <div>
+          <Select aria-label="Organization Name" name="name" defaultValue="My Circle" >
+            <option value="12">1 year</option>
+            <option value="6">6 months</option>
+            <option value="3">3 months</option>
+          </Select>
+        </div>
+      </section>
+      <Divider className="my-10" soft />
+
+
+      <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
+        <div className="space-y-1">
+          <Subheading>Min Deposit (USDT)</Subheading>
+          <Text>min allowed to be deposited per</Text>
+        </div>
+        <div>
+          <Input aria-label="Organization Name" name="name" defaultValue="1" required aria-required />
+        </div>
       </section>
 
       <Divider className="my-10" soft />
 
-      <section className="grid gap-x-8 gap-y-6 sm:grid-cols-2">
-        <div className="space-y-1">
-          <Subheading>Currency</Subheading>
-          <Text>The currency that your organization will be collecting.</Text>
-        </div>
-        <div>
-          <Select aria-label="Currency" name="currency" defaultValue="cad">
-            <option value="cad">CAD - Canadian Dollar</option>
-            <option value="usd">USD - United States Dollar</option>
-          </Select>
-        </div>
-      </section> */}
-
-      {/* <Divider className="my-10" soft /> */}
 
       <div className="flex justify-end gap-4">
-        <Button type="reset" plain>
-          Reset
-        </Button>
         <Button type="submit">Create Circle</Button>
       </div>
     </form>

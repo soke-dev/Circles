@@ -2,6 +2,7 @@ import * as Headless from '@headlessui/react'
 import clsx from 'clsx'
 import React, { forwardRef } from 'react'
 import { Link } from './link'
+import { Spinner } from './spinner'
 
 const styles = {
   base: [
@@ -162,13 +163,13 @@ type ButtonProps = (
   | { color?: keyof typeof styles.colors; outline?: never; plain?: never }
   | { color?: never; outline: true; plain?: never }
   | { color?: never; outline?: never; plain: true }
-) & { className?: string; children: React.ReactNode } & (
+) & { className?: string; isLoading?: boolean, children: React.ReactNode } & (
     | Omit<Headless.ButtonProps, 'as' | 'className'>
     | Omit<React.ComponentPropsWithoutRef<typeof Link>, 'className'>
   )
 
 export const Button = forwardRef(function Button(
-  { color, outline, plain, className, children, ...props }: ButtonProps,
+  { color, outline, plain, className, children, isLoading, ...props }: ButtonProps,
   ref: React.ForwardedRef<HTMLElement>
 ) {
   let classes = clsx(
@@ -183,7 +184,7 @@ export const Button = forwardRef(function Button(
     </Link>
   ) : (
     <Headless.Button {...props} className={clsx(classes, 'cursor-default')} ref={ref}>
-      <TouchTarget>{children}</TouchTarget>
+      <TouchTarget>{isLoading ? <Spinner /> : children}</TouchTarget>
     </Headless.Button>
   )
 })

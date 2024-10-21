@@ -1,6 +1,6 @@
 'use client'
 
-import { Avatar } from '@/components/avatar'
+import { Avatar } from 'src/components/avatar'
 import {
   Dropdown,
   DropdownButton,
@@ -8,8 +8,8 @@ import {
   DropdownItem,
   DropdownLabel,
   DropdownMenu,
-} from '@/components/dropdown'
-import { Navbar, NavbarItem, NavbarSection, NavbarSpacer } from '@/components/navbar'
+} from 'src/components/dropdown'
+import { Navbar, NavbarItem, NavbarSection, NavbarSpacer } from 'src/components/navbar'
 import {
   Sidebar,
   SidebarBody,
@@ -20,9 +20,8 @@ import {
   SidebarLabel,
   SidebarSection,
   SidebarSpacer,
-} from '@/components/sidebar'
-import { SidebarLayout } from '@/components/sidebar-layout'
-import { getEvents } from '@/data'
+} from 'src/components/sidebar'
+import { SidebarLayout } from 'src/components/sidebar-layout'
 import {
   ArrowRightStartOnRectangleIcon,
   BookOpenIcon,
@@ -43,6 +42,12 @@ import {
   TicketIcon,
 } from '@heroicons/react/20/solid'
 import { usePathname } from 'next/navigation'
+import { getEvents } from './data'
+import { getAccount } from '@/lib/account'
+import { ThirdwebAuthProvider, useAddress } from '@thirdweb-dev/react'
+import Bio from './bio'
+import WalletProvider from '@/providers/walletProvider'
+import TreadingCircles from '@/components/trendingCircles'
 
 function AccountDropdownMenu({ anchor }: { anchor: 'top start' | 'bottom end' }) {
   return (
@@ -70,13 +75,15 @@ function AccountDropdownMenu({ anchor }: { anchor: 'top start' | 'bottom end' })
 }
 
 export function ApplicationLayout({
-  events,
+
   children,
 }: {
-  events: Awaited<ReturnType<typeof getEvents>>
+
   children: React.ReactNode
 }) {
   let pathname = usePathname()
+
+
 
   return (
     <SidebarLayout
@@ -103,19 +110,19 @@ export function ApplicationLayout({
                 <ChevronDownIcon />
               </DropdownButton>
               <DropdownMenu className="min-w-80 lg:min-w-64" anchor="bottom start">
-                <DropdownItem href="/settings">
+                <DropdownItem href="/profile">
                   <Cog8ToothIcon />
                   <DropdownLabel>Account</DropdownLabel>
                 </DropdownItem>
                 <DropdownDivider />
-                <DropdownItem href="/events">
-                  <Avatar slot="icon" src="/teams/catalyst.svg" />
+                <DropdownItem href="/circles">
+                  <Avatar slot="icon" src="/teams/logo.png" />
                   <DropdownLabel>Join a circle</DropdownLabel>
                 </DropdownItem>
-                <DropdownItem href="#">
-                <BookOpenIcon />
+                {/* <DropdownItem href="#">
+                  <BookOpenIcon />
                   <DropdownLabel>Docs</DropdownLabel>
-                </DropdownItem>
+                </DropdownItem> */}
                 <DropdownDivider />
                 <DropdownItem href="#">
                   <PlusIcon />
@@ -131,7 +138,7 @@ export function ApplicationLayout({
                 <HomeIcon />
                 <SidebarLabel>Home</SidebarLabel>
               </SidebarItem>
-              <SidebarItem href="/events" current={pathname.startsWith('/events')}>
+              <SidebarItem href="/circles" current={pathname.startsWith('/circles')}>
                 <Square2StackIcon />
                 <SidebarLabel>Circles</SidebarLabel>
               </SidebarItem>
@@ -139,57 +146,44 @@ export function ApplicationLayout({
                 <Cog6ToothIcon />
                 <SidebarLabel>Create a Circle</SidebarLabel>
               </SidebarItem>
-              <SidebarItem href="/orders" current={pathname.startsWith('/orders')}>
+              {/* <SidebarItem href="/transactions" current={pathname.startsWith('/transactions')}>
                 <TicketIcon />
                 <SidebarLabel>Transaction History</SidebarLabel>
-              </SidebarItem>
-              <SidebarItem href="/settings" current={pathname.startsWith('/settings')}>
+              </SidebarItem> */}
+              <SidebarItem href="/profile" current={pathname.startsWith('/profile')}>
                 <Cog6ToothIcon />
-                <SidebarLabel>Account</SidebarLabel>
+                <SidebarLabel>Profile</SidebarLabel>
               </SidebarItem>
-       
+
 
             </SidebarSection>
+            {/* <TreadingCircles/> */}
 
-            <SidebarSection className="max-lg:hidden">
-              <SidebarHeading>Trending Circles</SidebarHeading>
-              {events.map((event) => (
-                <SidebarItem key={event.id} href={event.url}>
-                  {event.name}
-                </SidebarItem>
-              ))}
-            </SidebarSection>
 
             <SidebarSpacer />
 
             <SidebarSection>
               <SidebarItem href="#">
-              
+
                 <SidebarLabel>Join Telegram</SidebarLabel>
               </SidebarItem>
               <SidebarItem href="#">
-       
+
                 <SidebarLabel>Follow us on X</SidebarLabel>
               </SidebarItem>
-              <SidebarItem href="#">
+              {/* <SidebarItem href="#">
                 <BookOpenIcon />
                 <SidebarLabel>Docs</SidebarLabel>
-              </SidebarItem>
+              </SidebarItem> */}
             </SidebarSection>
           </SidebarBody>
 
           <SidebarFooter className="max-lg:hidden">
             <Dropdown>
               <DropdownButton as={SidebarItem}>
-                <span className="flex min-w-0 items-center gap-3">
-                  <Avatar src="/users/soke.jpg" className="size-10" square alt="" />
-                  <span className="min-w-0">
-                    <span className="block truncate text-sm/5 font-medium text-zinc-950 dark:text-white">Soke</span>
-                    <span className="block truncate text-xs/5 font-normal text-zinc-500 dark:text-zinc-400">
-                    soke.base.eth
-                    </span>
-                  </span>
-                </span>
+                <WalletProvider>
+                  <Bio />
+                </WalletProvider>
                 <ChevronUpIcon />
               </DropdownButton>
               <AccountDropdownMenu anchor="top start" />

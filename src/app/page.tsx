@@ -1,25 +1,18 @@
-import { Avatar } from '@/components/avatar'
-import { Badge } from '@/components/badge'
-import { Button } from '@/components/button'
-import { Divider } from '@/components/divider'
-import { Heading, Subheading } from '@/components/heading'
-import { Select } from '@/components/select'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/table'
-import { getRecentOrders } from '@/data'
 
-export function Stat({ title, value, change }: { title: string; value: string; change: string }) {
-  return (
-    <div>
-      <Divider />
-      <div className="mt-6 text-lg/6 font-medium sm:text-sm/6">{title}</div>
-      <div className="mt-3 text-3xl/8 font-semibold sm:text-2xl/8">{value}</div>
-      <div className="mt-3 text-sm/6 sm:text-xs/6">
-        <Badge color={change.startsWith('+') ? 'lime' : 'pink'}>{change}</Badge>{' '}
-        <span className="text-zinc-500">from last week</span>
-      </div>
-    </div>
-  )
-}
+import { Avatar } from 'src/components/avatar'
+import { Badge } from '@components/badge'
+import { Button } from 'src/components/button'
+import { Divider } from 'src/components/divider'
+import { Heading, Subheading } from 'src/components/heading'
+import { Select } from 'src/components/select'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'src/components/table'
+import { getRecentOrders } from 'src/app/data'
+import ConnectWallet from '@/components/connectWallet'
+import WalletProvider from '@/providers/walletProvider'
+import { Stat } from '@/components/stats'
+
+
+
 
 export default async function Home() {
   let orders = await getRecentOrders()
@@ -28,12 +21,17 @@ export default async function Home() {
     <>
       <Heading>Good afternoon, Soke</Heading>
       <div className="mt-8 flex items-end justify-between">
-      <div> <Button>Connect Wallet</Button></div>
-     
-        <Subheading>Circles overview</Subheading>
-        
         <div>
-          
+          {/* <Button>Connect Wallet</Button> */}
+          <WalletProvider>
+            <ConnectWallet />
+          </WalletProvider>
+        </div>
+
+        <Subheading>Circles overview</Subheading>
+
+        <div>
+
           <Select name="period">
             <option value="last_week">Last week</option>
             <option value="last_two">Last two weeks</option>
@@ -42,8 +40,8 @@ export default async function Home() {
           </Select>
         </div>
       </div>
-   
-      
+
+
 
       <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
         <Stat title="Circles Balance" value="$117,566" change="+4.5%" />
@@ -68,17 +66,18 @@ export default async function Home() {
               <TableCell>{order.id}</TableCell>
               <TableCell className="text-zinc-500">{order.date}</TableCell>
               <TableCell>{order.customer.name}</TableCell>
-              
-                {/* <div className="flex items-center gap-2">
+
+              {/* <div className="flex items-center gap-2">
                   <Avatar src={order.event.thumbUrl} className="size-6" />
                   <span>{order.event.name}</span>
                 </div> */}
-           
+
               <TableCell className="text-right">US{order.amount.usd}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+
     </>
   )
 }
