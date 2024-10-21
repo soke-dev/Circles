@@ -15,7 +15,6 @@ import WalletProvider from '@/providers/walletProvider'
 // }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let events = await getEvents()
 
   return (
     <html
@@ -27,7 +26,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </head>
       <body>
-        <ApplicationLayout events={events}>{children}</ApplicationLayout>
+        <ApplicationLayout  >{children}</ApplicationLayout>
       </body>
     </html>
   )

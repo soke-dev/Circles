@@ -111,26 +111,24 @@ export default function DepositFunds({ circleId }: DepositProps) {
      return (
           <div>
                <Button onClick={openDeposit} >Deposit to start saving</Button>
-               {
-                    <Drawer title='Deposit' isOpen={isDepositOpen} onClose={onClose}>
-                         <form onSubmit={onSubmit}>
 
-                              <h3>How mush do you want to save</h3>
-                              {/* <Divider /> */}
-                              <br />
+               <Drawer title='Deposit' isOpen={isDepositOpen} onClose={onClose}>
+                    <form onSubmit={onSubmit}>
 
-                              <Input name='amountInETH' type='number' aria-required required />
-                              <br />
-                              {/* {(isLoading || writeLoading) && <p>Is loading contract</p>} */}
-                              {error && <p className='text-red-500'>{JSON.stringify(error)}</p>}
-                              <Button isLoading={isLoading || writeLoading} type='submit'>
-                                   Proceed
-                              </Button>
+                         <h3>How mush do you want to save</h3>
 
-                         </form>
+                         <br />
 
-                    </Drawer>
-               }
+                         <Input name='amountInETH' type='number' aria-required required />
+                         <br />
+                         <Button isLoading={isLoading || writeLoading} type='submit'>
+                              Proceed
+                         </Button>
+
+                    </form>
+
+               </Drawer>
+
           </div>
      )
 }

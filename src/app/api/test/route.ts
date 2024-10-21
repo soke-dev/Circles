@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CollectionNames, fDb } from "../../../lib/firebase";
-import { Circle } from "../../../lib/circle";
 import { getCountries } from "@/app/data";
+import { Circle } from "@/lib/circle";
 
 const circles = [
      {
@@ -32,7 +32,7 @@ const circles = [
      },
 ].map((country) => {
 
-     return new Circle({ name: country.name, description: `Join ${country.name} national leaderboard`, image: `./flags/${country.code}.svg` })
+     return Circle({ name: country.name, description: `Join ${country.name} national leaderboard`, image: `./flags/${country.code}.svg` })
 })
 
 
@@ -45,7 +45,7 @@ export async function GET(req: NextRequest, res: any) {
      // console.log(circle.json)
      // await fDb.collection(CollectionNames.circles).doc(circle.name).set(circle.json);
 
-     await circles.forEach(async (circle) => {
+     await circles.forEach(async (circle: any) => {
           await fDb.collection(CollectionNames.circles).doc(circle.id).set(circle.json);
      })
 

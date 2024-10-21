@@ -27,7 +27,7 @@ export type Circle = {
      isPrivate: boolean;
 }
 
-const Circle = async (arg: { name: string, isPrivate?: false, category?: string, image?: string, noOfParticipants?: number, creator?: string, totalSaved?: number, description: string, createdAt?: number, updatedAt?: number }) => {
+export const Circle = async (arg: { name: string, isPrivate?: false, category?: string, image?: string, noOfParticipants?: number, creator?: string, totalSaved?: number, description: string, createdAt?: number, updatedAt?: number }) => {
      return {
           id: Utils.cleanString(arg.name),
           name: arg.name,
